@@ -87,12 +87,13 @@
     </style>
   </head>
   <body>
-    <div id="container" style="background-color: #000000;"></div>
+    <div id="container" style="background-color: #131313;"></div>
     <div id="menu">
       <button id="table">TABLE</button>
       <button id="sphere">SPHERE</button>
       <button id="helix">HELIX</button>
       <button id="grid">GRID</button>
+      <button id="reset">RESET CAMERA</button>
     </div>
 
     <script type="module">
@@ -211,7 +212,7 @@
       }
       function init() {
         camera = new THREE.PerspectiveCamera(
-          40,
+          50,
           window.innerWidth / window.innerHeight,
           1,
           10000
@@ -362,6 +363,15 @@
           "click",
           function() {
             transform(targets.grid, 2000);
+          },
+          false
+        );
+
+        const buttonReset = document.getElementById("reset");
+        buttonReset.addEventListener(
+          "click",
+          function() {
+            camera.position.set( 0, 0, 1800);
           },
           false
         );
