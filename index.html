@@ -24,8 +24,8 @@
       }
 
       .element {
-        width: 320px;
-        height: 320px;
+        width: 640px;
+        height: 640px;
         box-shadow: 0px 0px 12px rgba(156, 1, 1, 0.5);
         border: 1px solid rgba(127, 255, 255, 0.25);
         font-family: Helvetica, sans-serif;
@@ -94,7 +94,6 @@
       <button id="table">TABLE</button>
       <button id="sphere">SPHERE</button>
       <button id="helix">HELIX</button>
-      <button id="grid">GRID</button>
       <button id="reset">RESET CAMERA</button>
     </div>
 
@@ -111,101 +110,83 @@
       const table = [
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny.jpg",
+        "/pictures/Bunny4.jpg",
         1,
         1,
+        2,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny4.jpg",
-        2,
+        5,
         1,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny.jpg",
         1,
-        2,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny2.jpg",
-        2,
-        2,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny.jpg",
         3,
-        2,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny4.jpg",
-        4,
-        2,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny.jpg",
-        5,
+        1,
         2,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny2.jpg",
         5,
+        2,
         1,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny3.jpg",
+        4,
         3,
-        1,
+        2,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny.jpg",
-        4,
-        1,
+        "/pictures/Bunny2.jpg",
+        2,
+        3,
+        2,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny2.jpg",
         1,
         3,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny3.jpg",
-        2,
-        3,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny.jpg",
-        3,
-        3,
+        1,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny4.jpg",
-        3,
-        4,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny2.jpg",
-        4,
-        3,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny.jpg",
         1,
         4,
+        1,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny3.jpg",
+        "/pictures/Bunny.jpg",
         2,
-        4,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny4.jpg",
         5,
-        3,
+        2,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny4.jpg",
+        4,
+        5,
+        2,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny3.jpg",
+        1,
+        5,
+        1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny.jpg",
+        1,
+        6,
+        1
       ];
 
       let camera, scene, renderer;
       let controls;
 
       const objects = [];
-      const targets = { table: [], sphere: [], helix: [], grid: [] };
+      const targets = { table: [], sphere: [], helix: [] };
 
       init();
       animate();
@@ -225,17 +206,19 @@
 
         // table
 
-        for (let i = 0; i < table.length; i += 5) {
+        for (let i = 0; i < table.length; i += 6) {
           const element = document.createElement("div");
-		  element.className = "element";
-		  element.id = i/5;
+          element.className = "element";
+          element.id = i / 5;
           element.style.backgroundImage = "url(" + table[i + 2] + ")";
-		  element.style.backgroundSize = "cover";
-		  element.onclick = (function(i){
-			  return function(){
-				hello(i / 5)
-			  }
-		  })(i);
+          element.style.backgroundSize = "cover";
+          element.style.width = 320 * table[i + 5] + 40 * (table[i + 5]-1) + 'px';
+          element.style.height = 320 * table[i + 5] + 40 * (table[i + 5]-1) + 'px';
+          element.onclick = (function(i) {
+            return function() {
+              hello(i / 5);
+            };
+          })(i);
 
           const number = document.createElement("div");
           number.className = "number";
@@ -263,8 +246,8 @@
           //
 
           const object = new THREE.Object3D();
-          object.position.x = table[i + 3] * 360 - 1050;
-          object.position.y = -(table[i + 4] * 360) + 990;
+          object.position.x = table[i + 3] * 360 - 1050 + ((table[i + 5] - 1) * 180);
+          object.position.y = -(table[i + 4] * 360 + ((table[i + 5] - 1) * 180)) + 990;
           object.position.z = -500;
 
           targets.table.push(object);
@@ -280,7 +263,7 @@
 
           const object = new THREE.Object3D();
 
-          object.position.setFromSphericalCoords(800, phi, theta);
+          object.position.setFromSphericalCoords(1300, phi, theta);
 
           vector.copy(object.position).multiplyScalar(2);
 
@@ -292,8 +275,8 @@
         // helix
 
         for (let i = 0, l = objects.length; i < l; i++) {
-          const theta = i * 0.4 + Math.PI;
-          const y = -(i * 24) + 450;
+          const theta = i * 0.8 + Math.PI;
+          const y = -(i * 100) + 450;
 
           const object = new THREE.Object3D();
 
@@ -307,19 +290,6 @@
 
           targets.helix.push(object);
         }
-
-        // grid
-
-        for (let i = 0; i < objects.length; i++) {
-          const object = new THREE.Object3D();
-
-          object.position.x = (i % 5) * 400 - 800;
-          object.position.y = -(Math.floor(i / 5) % 5) * 400 + 800;
-          object.position.z = Math.floor(i / 25) * 1000 - 2000 ;
-
-          targets.grid.push(object);
-        }
-
         //
 
         renderer = new CSS3DRenderer();
@@ -356,15 +326,6 @@
           "click",
           function() {
             transform(targets.helix, 2000);
-          },
-          false
-        );
-
-        const buttonGrid = document.getElementById("grid");
-        buttonGrid.addEventListener(
-          "click",
-          function() {
-            transform(targets.grid, 2000);
           },
           false
         );
