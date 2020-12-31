@@ -99,7 +99,6 @@
 
     <script type="module">
       import * as THREE from "/build/three.module.js";
-
       import { TWEEN } from "/jsm/libs/tween.module.min.js";
       import { CameraControls } from "/jsm/controls/CameraControls.js";
       import {
@@ -135,21 +134,27 @@
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny3.jpg",
+        6,
         4,
-        3,
-        2,
+        1,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny2.jpg",
-        2,
-        3,
-        2,
+        "/pictures/Bunny4.jpg",
+        6,
+        5,
+        1,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny2.jpg",
         1,
         3,
         1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny2.jpg",
+        2,
+        3,
+        2,
         "Picturecard",
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny4.jpg",
@@ -160,12 +165,6 @@
         "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
         "/pictures/Bunny.jpg",
         2,
-        5,
-        2,
-        "Picturecard",
-        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
-        "/pictures/Bunny4.jpg",
-        4,
         5,
         2,
         "Picturecard",
@@ -179,7 +178,43 @@
         "/pictures/Bunny.jpg",
         1,
         6,
-        1
+        1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny4.jpg",
+        4,
+        5,
+        2,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny.jpg",
+        6,
+        1,
+        1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny4.jpg",
+        6,
+        2,
+        1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny2.jpg",
+        6,
+        3,
+        1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny.jpg",
+        6,
+        6,
+        1,
+        "Picturecard",
+        "Hier steht cuter Text über ein Kaninchen. Kaninchen sind süß.",
+        "/pictures/Bunny3.jpg",
+        4,
+        3,
+        2
       ];
 
       let camera, scene, renderer;
@@ -190,9 +225,7 @@
 
       init();
       animate();
-      function hello(id) {
-        console.log("Hello" + id);
-      }
+
       function init() {
         camera = new THREE.PerspectiveCamera(
           50,
@@ -212,8 +245,10 @@
           element.id = i / 5;
           element.style.backgroundImage = "url(" + table[i + 2] + ")";
           element.style.backgroundSize = "cover";
-          element.style.width = 320 * table[i + 5] + 40 * (table[i + 5]-1) + 'px';
-          element.style.height = 320 * table[i + 5] + 40 * (table[i + 5]-1) + 'px';
+          element.style.width =
+            320 * table[i + 5] + 40 * (table[i + 5] - 1) + "px";
+          element.style.height =
+            320 * table[i + 5] + 40 * (table[i + 5] - 1) + "px";
           element.onclick = (function(i) {
             return function() {
               hello(i / 5);
@@ -246,8 +281,10 @@
           //
 
           const object = new THREE.Object3D();
-          object.position.x = table[i + 3] * 360 - 1050 + ((table[i + 5] - 1) * 180);
-          object.position.y = -(table[i + 4] * 360 + ((table[i + 5] - 1) * 180)) + 990;
+          object.position.x =
+            table[i + 3] * 360 - 1300 + (table[i + 5] - 1) * 180;
+          object.position.y =
+            -(table[i + 4] * 360 + (table[i + 5] - 1) * 180) + 990;
           object.position.z = -500;
 
           targets.table.push(object);
@@ -344,6 +381,10 @@
         //
 
         window.addEventListener("resize", onWindowResize, false);
+      }
+
+      function hello(id) {
+        console.log("Hello" + id);
       }
 
       function transform(targets, duration) {
