@@ -60,7 +60,7 @@ var CameraControls = function ( object, domElement ) {
 	// Set to false to disable panning
 	this.enablePan = true;
 	this.panSpeed = 1.0;
-	this.screenSpacePanning = false; // if true, pan in screen-space
+	this.screenSpacePanning = true; // if true, pan in screen-space
 	this.keyPanSpeed = 30.0;	// pixels moved per arrow key push
 
 	// Set to true to automatically rotate around the target
@@ -401,7 +401,7 @@ var CameraControls = function ( object, domElement ) {
 
 			if ( scope.screenSpacePanning === true ) {
 
-				v.setFromMatrixColumn( objectMatrix, 1 );
+				v.setFromMatrixColumn( objectMatrix, 2 );
 
 			} else {
 
@@ -606,12 +606,12 @@ var CameraControls = function ( object, domElement ) {
 		switch ( event.keyCode ) {
 
 			case scope.keys.UP:
-				pan( 0, scope.keyPanSpeed );
+				pan( 0, - scope.keyPanSpeed );
 				needsUpdate = true;
 				break;
 
 			case scope.keys.BOTTOM:
-				pan( 0, - scope.keyPanSpeed );
+				pan( 0, scope.keyPanSpeed );
 				needsUpdate = true;
 				break;
 
