@@ -735,14 +735,14 @@ var CameraControls = function ( object, domElement ) {
 
 		} else {
 
-			var x = 0.5 * ( event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
-			var y = 0.5 * ( event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
+			var x = 0.5 * (event.touches[ 0 ].pageX + event.touches[ 1 ].pageX );
+			var y = 0.5 * (event.touches[ 0 ].pageY + event.touches[ 1 ].pageY );
 
 			panEnd.set( x, y );
 
 		}
 
-		panDelta.subVectors( panEnd, panStart ).multiplyScalar( scope.panSpeed );
+		panDelta.subVectors( panEnd, panStart ).multiplyScalar(- scope.panSpeed );
 
 		pan( panDelta.x, panDelta.y );
 
