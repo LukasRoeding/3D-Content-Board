@@ -233,7 +233,7 @@
           1,
           10000
         );
-        camera.position.z = 3000;
+        camera.position.z = 3300;
 
         scene = new THREE.Scene();
 
@@ -328,6 +328,33 @@
           targets.helix.push(object);
         }
         //
+        
+        const iframe = document.createElement("iframe");
+        iframe.className = "iframe";
+        iframe.src = "https://www.youtube.com/embed/Bdh1Na6CydA?autoplay=1&mute=1&gyroscope=1";
+        iframe.frameborder = 0
+        iframe.allow = "accelerometer; autoplay; fullscreen; gyroscope"
+        iframe.width = "1500";
+        iframe.height = "2200";
+        const iframeCSS = new CSS3DObject(iframe);
+        iframeCSS.position.x = 2000;
+        iframeCSS.position.y = -300;
+        iframeCSS.position.z = 80;
+        iframeCSS.rotation.y = - Math.PI / 3;
+          scene.add(iframeCSS);
+          const iframe2 = document.createElement("iframe");
+        iframe2.className = "iframe";
+        iframe2.src = "https://www.youtube.com/embed/Bdh1Na6CydA?autoplay=1&mute=1&gyroscope=1";
+        iframe2.frameborder = 0
+        iframe2.allow = "accelerometer; autoplay; fullscreen; gyroscope"
+        iframe2.width = "1500";
+        iframe2.height = "2200";
+        const iframeCSS2 = new CSS3DObject(iframe2);
+        iframeCSS2.position.x = -2000;
+        iframeCSS2.position.y = -300;
+        iframeCSS2.position.z = 80;
+        iframeCSS2.rotation.y = - Math.PI / 0.375;
+          scene.add(iframeCSS2);
 
         renderer = new CSS3DRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
