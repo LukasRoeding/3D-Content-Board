@@ -111,9 +111,14 @@ var CameraControls = function ( object, domElement ) {
 		scope.zoom0 = scope.object.zoom;
 
 	};
-
+	this.changePosition = function(position) {
+		scope.object.position.copy( position );
+		scope.object.updateProjectionMatrix();
+		scope.dispatchEvent( changeEvent );
+		scope.update();
+	};
 	this.reset = function () {
-
+		console.log(scope.position0, scope.target0, scope.quaternion0)
 		scope.target.copy( scope.target0 );
 		scope.object.position.copy( scope.position0 );
 		scope.object.quaternion.copy( scope.quaternion0 );

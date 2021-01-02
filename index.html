@@ -95,6 +95,8 @@
       <button id="sphere">SPHERE</button>
       <button id="helix">HELIX</button>
       <button id="reset">RESET CAMERA</button>
+      <button id="forwards">FORWARDS</button>
+      <button id="backwards">BACKWARDS</button>
     </div>
 
     <script type="module">
@@ -214,7 +216,7 @@
         "/pictures/Bunny3.jpg",
         4,
         3,
-        2
+        2,
       ];
 
       let camera, scene, renderer;
@@ -303,9 +305,15 @@
           object.position.setFromSphericalCoords(1300, phi, theta);
 
           vector.copy(object.position).multiplyScalar(2);
-
+          
+          /** 
+          code to turn cards inwards
+          var vector2 = vector
+          vector2.x = -vector2.x;
+          vector2.y = -vector2.y;
+          vector2.z = -vector2.z;
+          object.lookAt(vector2); */
           object.lookAt(vector);
-
           targets.sphere.push(object);
         }
 
@@ -328,33 +336,33 @@
           targets.helix.push(object);
         }
         //
-        
+
         const iframe = document.createElement("iframe");
         iframe.className = "iframe";
-        iframe.src = "https://www.youtube.com/embed/Bdh1Na6CydA?autoplay=1&mute=1&gyroscope=1";
-        iframe.frameborder = 0
-        iframe.allow = "accelerometer; autoplay; fullscreen; gyroscope"
+        iframe.src =
+          "https://www.youtube.com/embed/Bdh1Na6CydA?autoplay=1&mute=1&gyroscope=1";
+        iframe.frameborder = 0;
+        iframe.allow = "accelerometer; autoplay; fullscreen; gyroscope";
         iframe.width = "1500";
         iframe.height = "2200";
         const iframeCSS = new CSS3DObject(iframe);
         iframeCSS.position.x = 2000;
         iframeCSS.position.y = -300;
         iframeCSS.position.z = 80;
-        iframeCSS.rotation.y = - Math.PI / 3;
-          scene.add(iframeCSS);
-          const iframe2 = document.createElement("iframe");
-        iframe2.className = "iframe";
-        iframe2.src = "https://www.youtube.com/embed/Bdh1Na6CydA?autoplay=1&mute=1&gyroscope=1";
-        iframe2.frameborder = 0
-        iframe2.allow = "accelerometer; autoplay; fullscreen; gyroscope"
-        iframe2.width = "1500";
-        iframe2.height = "2200";
-        const iframeCSS2 = new CSS3DObject(iframe2);
-        iframeCSS2.position.x = -2000;
-        iframeCSS2.position.y = -300;
-        iframeCSS2.position.z = 80;
-        iframeCSS2.rotation.y = - Math.PI / 0.375;
-          scene.add(iframeCSS2);
+        iframeCSS.rotation.y = -Math.PI / 3;
+        scene.add(iframeCSS);
+        const gif = document.createElement("div");
+        gif.style.width = "1500" + "px";
+        gif.style.height = "2200" + "px";
+        gif.style.backgroundImage = "url(/pictures/gif.gif)";
+        gif.style.backgroundSize = "cover";
+        gif.style.backgroundPosition = "center";
+        const gifCSS = new CSS3DObject(gif);
+        gifCSS.position.x = -2000;
+        gifCSS.position.y = -300;
+        gifCSS.position.z = 80;
+        gifCSS.rotation.y = Math.PI / 0.425;
+        scene.add(gifCSS);
 
         renderer = new CSS3DRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -396,6 +404,25 @@
 
         const buttonReset = document.getElementById("reset");
         buttonReset.addEventListener(
+          "click",
+          function() {
+            controls.reset();
+          },
+          false
+        );
+        const buttonForward = document.getElementById("forwards");
+        buttonForward.addEventListener(
+          "click",
+          function() {
+            var dir = new THREE.Vector3();
+            camera.getWorldDirection( dir );
+            console.log(dir);
+            controls.changePosition(dir);
+          },
+          false
+        );
+        const buttonBackward = document.getElementById("backwards");
+        buttonBackward.addEventListener(
           "click",
           function() {
             controls.reset();
