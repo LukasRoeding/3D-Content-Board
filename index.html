@@ -76,6 +76,16 @@
         padding: 5px 10px;
         cursor: pointer;
         margin-top: 5px;
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+
+        /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+        -ms-user-select: none;
+        user-select: none;
       }
 
       button:hover {
@@ -230,7 +240,7 @@
 
       function init() {
         camera = new THREE.PerspectiveCamera(
-          50,
+          30,
           window.innerWidth / window.innerHeight,
           1,
           10000
@@ -414,6 +424,7 @@
         const buttonForward = document.getElementById("forwards");
         const buttonBackward = document.getElementById("backwards");
         var mousedownID = -1; //Global ID of mouse down interval
+        var mousedownIDForwards = -1; //Global ID of mouse down interval
         function mousedown(event) {
           if (mousedownID == -1)
             //Prevent multimple loops!
@@ -423,12 +434,19 @@
             );
         }
         function mousedownForwards(event) {
-          if (mousedownID == -1)
+          if (mousedownIDForwards == -1)
             //Prevent multimple loops!
-            mousedownID = setInterval(
+            mousedownIDForwards = setInterval(
               whilemousedownForwards,
               50 /*execute every 100ms*/
             );
+        }
+        function mouseupForwards(event) {
+          if (mousedownIDForwards != -1) {
+            //Only stop if exists
+            clearInterval(mousedownIDForwards );
+            mousedownIDForwards = -1;
+          }
         }
         function mouseup(event) {
           if (mousedownID != -1) {
@@ -438,20 +456,27 @@
           }
         }
         function whilemousedown() {
-            controls.changePosition(false);
+          controls.changePosition(false);
         }
         function whilemousedownForwards() {
-            controls.changePosition(true);
+          controls.changePosition(true);
         }
         //Assign events
         buttonBackward.addEventListener("mousedown", mousedown);
         buttonBackward.addEventListener("mouseup", mouseup);
         //Also clear the interval when user leaves the window with mouse
         buttonBackward.addEventListener("mouseout", mouseup);
+        buttonBackward.addEventListener("mouseout", mouseup);
+        buttonBackward.addEventListener("touchstart", mousedown);
+        buttonBackward.addEventListener("touchend", mouseup);
+        buttonBackward.addEventListener("touchmove", mouseup);
         buttonForward.addEventListener("mousedown", mousedownForwards);
-        buttonForward.addEventListener("mouseup", mouseup);
+        buttonForward.addEventListener("mouseup", mouseupForwards);
         //Also clear the interval when user leaves the window with mouse
-        buttonForward.addEventListener("mouseout", mouseup);
+        buttonForward.addEventListener("mouseout", mouseupForwards);
+        buttonForward.addEventListener("touchstart", mousedownForwards);
+        buttonForward.addEventListener("touchend", mouseupForwards);
+        buttonForward.addEventListener("touchmove", mouseupForwards);
         transform(targets.table, 2000);
 
         //
