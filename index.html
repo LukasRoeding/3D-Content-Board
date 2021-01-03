@@ -305,7 +305,7 @@
           object.position.setFromSphericalCoords(1300, phi, theta);
 
           vector.copy(object.position).multiplyScalar(2);
-          
+
           /** 
           code to turn cards inwards
           var vector2 = vector
@@ -336,7 +336,7 @@
           targets.helix.push(object);
         }
         //
-
+        /*
         const iframe = document.createElement("iframe");
         iframe.className = "iframe";
         iframe.src =
@@ -363,7 +363,7 @@
         gifCSS.position.z = 80;
         gifCSS.rotation.y = Math.PI / 0.425;
         scene.add(gifCSS);
-
+        */
         renderer = new CSS3DRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById("container").appendChild(renderer.domElement);
@@ -410,26 +410,48 @@
           },
           false
         );
-        const buttonForward = document.getElementById("forwards");
-        buttonForward.addEventListener(
-          "click",
-          function() {
-            var dir = new THREE.Vector3();
-            camera.getWorldDirection( dir );
-            console.log(dir);
-            controls.changePosition(dir);
-          },
-          false
-        );
-        const buttonBackward = document.getElementById("backwards");
-        buttonBackward.addEventListener(
-          "click",
-          function() {
-            controls.reset();
-          },
-          false
-        );
 
+        const buttonForward = document.getElementById("forwards");
+        const buttonBackward = document.getElementById("backwards");
+        var mousedownID = -1; //Global ID of mouse down interval
+        function mousedown(event) {
+          if (mousedownID == -1)
+            //Prevent multimple loops!
+            mousedownID = setInterval(
+              whilemousedown,
+              50 /*execute every 100ms*/
+            );
+        }
+        function mousedownForwards(event) {
+          if (mousedownID == -1)
+            //Prevent multimple loops!
+            mousedownID = setInterval(
+              whilemousedownForwards,
+              50 /*execute every 100ms*/
+            );
+        }
+        function mouseup(event) {
+          if (mousedownID != -1) {
+            //Only stop if exists
+            clearInterval(mousedownID);
+            mousedownID = -1;
+          }
+        }
+        function whilemousedown() {
+            controls.changePosition(false);
+        }
+        function whilemousedownForwards() {
+            controls.changePosition(true);
+        }
+        //Assign events
+        buttonBackward.addEventListener("mousedown", mousedown);
+        buttonBackward.addEventListener("mouseup", mouseup);
+        //Also clear the interval when user leaves the window with mouse
+        buttonBackward.addEventListener("mouseout", mouseup);
+        buttonForward.addEventListener("mousedown", mousedownForwards);
+        buttonForward.addEventListener("mouseup", mouseup);
+        //Also clear the interval when user leaves the window with mouse
+        buttonForward.addEventListener("mouseout", mouseup);
         transform(targets.table, 2000);
 
         //
