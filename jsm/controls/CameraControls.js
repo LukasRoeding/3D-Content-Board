@@ -587,8 +587,8 @@ var CameraControls = function(object, domElement) {
     if (event.touches.length == 1) {
       rotateStart.set(event.touches[0].pageX, event.touches[0].pageY);
     } else {
-      var x = 0.5 * (event.touches[0].pageX + event.touches[1].pageX);
-      var y = 0.5 * (event.touches[0].pageY + event.touches[1].pageY);
+      var x = 0.5 * (event.touches[0].pageX - event.touches[1].pageX);
+      var y = 0.5 * (event.touches[0].pageY - event.touches[1].pageY);
 
       rotateStart.set(x, y);
     }
