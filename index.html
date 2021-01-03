@@ -13,7 +13,10 @@
         margin: 0;
       }
       a {
-        color: #8ff;
+        color: rgba(156, 1, 1, 1);
+        font-size: larger;
+        background-color: black;
+        line-height: 33px;
       }
 
       #menu {
@@ -22,7 +25,35 @@
         width: 100%;
         text-align: center;
       }
-
+      #information {
+        position: absolute;
+        top: 20px;
+        width: 80%;
+        margin-left: 10%;
+        background-color: black;
+        text-align: center;
+        color: rgba(156, 1, 1, 1);
+        outline: 1px solid rgba(156, 1, 1, 0.75);
+        border: 0px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+      }
+      @media (max-width: 700px) {       #information {
+        position: absolute;
+        top: 20px;
+        width: 85%;
+        margin-left: 7.5%;
+        text-align: center;
+        color: rgba(156, 1, 1, 1);
+      } }
+      @media (min-width: 1500px) {       #information {
+        position: absolute;
+        top: 20px;
+        width: 75%;
+        margin-left: 12.5%;
+        text-align: center;
+        color: rgba(156, 1, 1, 1);
+      } }
       .element {
         width: 640px;
         height: 640px;
@@ -79,11 +110,6 @@
         -moz-user-select: -moz-none;
         -khtml-user-select: none;
         -webkit-user-select: none;
-
-        /*
-     Introduced in IE 10.
-     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-   */
         -ms-user-select: none;
         user-select: none;
       }
@@ -99,7 +125,12 @@
     </style>
   </head>
   <body>
+
     <div id="container" style="background-color: #131313;"></div>
+    <div id="information">
+      <a>Use WASD or the buttons on the bottom to move. Click & drag your mouse / drag your finger over the screen, to change direction.  </a>
+      <button id="remove" style="font-size: larger; padding:4px 10px; background-color: black; position: absolute; top: -15px; right: -15px; outline: 2px solid rgba(184, 0, 0, 1); color: rgba(184, 0, 0, 1);">X</button>
+    </div>
     <div id="menu">
       <button id="table">TABLE</button>
       <button id="sphere">SPHERE</button>
@@ -245,7 +276,7 @@
           1,
           10000
         );
-        camera.position.z = 3300;
+        camera.position.z = 500;
 
         scene = new THREE.Scene();
 
@@ -383,6 +414,7 @@
         controls = new CameraControls(camera, renderer.domElement);
         controls.minDistance = 500;
         controls.maxDistance = 6000;
+
         controls.addEventListener("change", render);
 
         const buttonTable = document.getElementById("table");
@@ -417,6 +449,15 @@
           "click",
           function() {
             controls.reset();
+          },
+          false
+        );
+
+        const buttonRemove = document.getElementById("remove");
+        buttonRemove.addEventListener(
+          "click",
+          function() {
+            document.getElementById("information").remove();
           },
           false
         );

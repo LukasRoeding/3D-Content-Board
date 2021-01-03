@@ -31,8 +31,8 @@ var CameraControls = function(object, domElement) {
   this.trackball = false;
 
   // How far you can dolly in and out ( PerspectiveCamera only )
-  this.minDistance = 0;
-  this.maxDistance = 1;
+  this.minDistance = 500;
+  this.maxDistance = 1000;
 
   // How far you can zoom in and out ( OrthographicCamera only )
   this.minZoom = 0;
