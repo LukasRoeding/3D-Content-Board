@@ -327,8 +327,8 @@
           object.position.x =
             table[i + 3] * 360 - 1300 + (table[i + 5] - 1) * 180;
           object.position.y =
-            -(table[i + 4] * 360 + (table[i + 5] - 1) * 180) + 990;
-          object.position.z = -500;
+            -(table[i + 4] * 360 + (table[i + 5] - 1) * 180) + 1200;
+          object.position.z = -1300;
 
           targets.table.push(object);
         }
@@ -342,11 +342,9 @@
           const theta = Math.sqrt(l * Math.PI) * phi;
 
           const object = new THREE.Object3D();
-
-          object.position.setFromSphericalCoords(1300, phi, theta);
-
+          object.position.setFromSphericalCoords(1500, phi, theta);
+          
           vector.copy(object.position).multiplyScalar(2);
-
           /** 
           code to turn cards inwards
           var vector2 = vector
@@ -373,7 +371,7 @@
           vector.z = object.position.z * 2;
 
           object.lookAt(vector);
-
+          object.position.z = object.position.z - 1500;
           targets.helix.push(object);
         }
         //
